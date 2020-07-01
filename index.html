@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>manga-recognition</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <meta name="theme-color" content="#fafafa">
+
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.3.5/dist/alpine.min.js" defer></script>
+  <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+  <script src='https://unpkg.com/browser-image-manipulation@0.3.3/dist/browser-image-manipulation.js'></script>
+  <script src="vendor/opencv-3.4.js"></script>
+</head>
+
+<body>
+
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <div x-data="photosList()" class="photos-list">
+
+    <div class="photos-list__toolbar">
+      <input type="file" x-on:input.debounce="selectPhotos" />
+    </div>
+
+    <div class="photos-list__info">
+      <div x-html="`Total: ${photos.length}`" />
+    </div>
+
+    <div class="photos-list__rows">
+      <template x-for="photo in photos" :key="photo.id">
+        <div class="photo">
+          <label x-html="photo.caption" class="photo__label"></label>
+          <div class="photo__images">
+            <picture class="photo__image">
+              <img x-bind:src="photo.image" x-bind:alt="photo.caption" />
+            </picture>
+
+            <picture class="photo__image">
+              <canvas x-bind:id="photo.id"/>
+            </picture>
+
+            <label class="photo__image" x-text="photo.text"></label >
+          </div>
+        </div>
+      </template>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
